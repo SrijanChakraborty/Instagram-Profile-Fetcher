@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instagram Profile Fetcher</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f7f7f7;
+      }
+      header {
+        background-color: #333;
+        color: white;
+        padding: 1em;
+        width: 100%;
+        text-align: center;
+      }
+      main {
+        margin: 2em;
+        padding: 2em;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      input[type="text"] {
+        padding: 0.5em;
+        margin-bottom: 1em;
+        width: 100%;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      input[type="submit"] {
+        padding: 0.5em 1em;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .profile,
+      .posts {
+        margin-top: 2em;
+      }
+      .post {
+        margin-top: 1em;
+        padding: 1em;
+        background-color: #f1f1f1;
+        border-radius: 8px;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Instagram Profile Fetcher</h1>
+    </header>
+    <main>
+      <form action="/profile" method="post">
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter Instagram Username"
+          required
+        />
+        <input type="submit" value="Fetch Profile" />
+      </form>
+
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %} {% if profile %}
+      <div class="profile">
+        <h2>Profile Details</h2>
+        <p><strong>Username:</strong> {{ profile.username }}</p>
+        <p><strong>Full Name:</strong> {{ profile.full_name }}</p>
+        <p><strong>Biography:</strong> {{ profile.biography }}</p>
+        <p><strong>Number of Posts:</strong> {{ profile.number_of_posts }}</p>
+        <p><strong>Followers:</strong> {{ profile.followers }}</p>
+        <p><strong>Following:</strong> {{ profile.following }}</p>
+      </div>
+
+      <div class="posts">
+        <h2>Recent Posts</h2>
+        {% for post in posts %}
+        <div class="post">
+          <p>
+            <strong>Post URL:</strong>
+            <a href="{{  post.image_url }}" target="_blank"
+              >{{ post.image_url }}</a
+            >
+          </p>
+          <p><strong>Caption:</strong> {{ post.caption }}</p>
+          <p><strong>Likes:</strong> {{ post.likes }}</p>
+          <p><strong>Comments:</strong> {{ post.comments }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </main>
+  </body>
+</html>
